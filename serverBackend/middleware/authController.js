@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import User from '../models/user.js';
 import { expressjwt } from 'express-jwt';
 
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
+dotenv.config();
 // console.log("JWT Secret in authController:", process.env.JWT_SECRET);
 const signin = async (req, res) => {
   try {
@@ -21,11 +22,11 @@ const signin = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     };
     
-    console.log("User found and authenticated");
+    // console.log("User found and authenticated");
 
     //Respond with a JWT token
     const token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET)
-    console.log("Token generated:", token);
+    // console.log("Token generated:", token);
 
     res.cookie("t", token, { expire: new Date() + 36000000 })
 
@@ -62,7 +63,7 @@ const signup = async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET)
-    console.log("Token generated:", token);
+    // console.log("Token generated:", token);
     res.cookie("t", token, { expire: new Date() + 36000000 })
 
      return res.json({ 
