@@ -1,0 +1,73 @@
+/* home.css Christopher Esguerra 301483615 September 11, 2025 */
+
+
+.intro-section a {
+  border-radius: 4px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.intro-section a:hover {
+  color: #000000;
+}
+
+.intro-greeting {
+  font-size: 3rem;
+}
+
+.intro-highlight {
+  color: #fff;
+  text-align: center;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+.intro-section {
+  height: 100vh;
+  font-size: 1.5rem;
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  text-align: left;
+  padding: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .intro-section {
+    width: 90%;
+    padding: 1rem;
+  }
+}
+
+.intro-text {
+  z-index: 1;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.intro-section img {
+  align-items: right;
+  width: auto;
+  right: 0;
+  height: 90vh;
+  object-fit: cover;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  position:absolute;
+  z-index: 0;
+
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff;
+  }
+  to {
+    text-shadow: 0 0 20px #fff;
+  }
+}   
+
+

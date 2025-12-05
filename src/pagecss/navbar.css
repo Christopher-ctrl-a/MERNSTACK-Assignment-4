@@ -1,0 +1,71 @@
+/* navbar.css Christopher Esguerra 301483615 September 11, 2025 */
+
+.logo {
+    object-fit: cover;
+    padding: 1rem;
+    height: 2rem;
+}
+
+Link{
+    margin: 1rem;
+}
+
+.nav-content a{
+  font-weight: 500;
+  font-size: 2rem;
+  color: #ffffff;
+  text-decoration: inherit;
+}
+
+.nav-content a:hover{
+  color: #92c8ff;
+  text-decoration: underline;
+}
+
+.nav-content a:active, .nav-content a:focus{
+  color: #92c8ff;
+  text-decoration: underline;
+}
+
+nav{
+    height: 5rem;
+    width: 100vw;
+    max-width: 50rem;
+    margin: 1rem auto;
+    align-items: left;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  background-color: #242424;
+}
+
+.nav-content{
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    
+}
+
+.desktop-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+.logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
