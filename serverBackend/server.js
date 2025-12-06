@@ -4,8 +4,9 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
-dotenv.config({ path: "../.env" });
 
+// dotenv.config({ path: "../.env" });
+dotenv.config();
 
 
 import userRoutes from './routes/userroutes.js';
