@@ -11,7 +11,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node serverBackend/server.js"
+    "start": "nodemon serverBackend/server.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

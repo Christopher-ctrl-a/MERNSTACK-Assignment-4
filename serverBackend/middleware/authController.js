@@ -87,32 +87,38 @@ const requireSignin = expressjwt({
   userProperty: "auth",
 })
 
-const hasAuthorization = (req, res, next) => {
-const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
-    if (!authorized) {
-      return res.status(403).json({ error: "User is not authorized" });
+    const hasAuthorization = (req, res, next) => { 
+
+        const authorized = req.profile && req.auth
+        && req.profile._id == req.auth._id 
+        if (!(authorized)) {
+        return res.status(403).json({ 
+        error: "User is not authorized"
+        }) 
+        } 
+        next()
+        }
+
+
+
+const auth = (req, res, next) => {
+  const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+  if (!authHeader) return res.status(401).json({ error: 'No token provided' });
+
+  const parts = authHeader.split(' ');
+  if (parts.length !== 2 || parts[0] !== 'Bearer') return res.status(401).json({ error: 'Malformed token' });
+
+  const token = parts[1];
+  const secret = process.env.JWT_SECRET;
+
+  jwt.verify(token, secret, (err, decoded) => {
+    if (err) {
+      if (err.name === 'TokenExpiredError') return res.status(403).json({ error: 'Token expired' });
+      return res.status(403).json({ error: 'Failed to authenticate token' });
     }
-    next()
-  }
-
-// const auth = (req, res, next) => {
-//   const authHeader = req.headers['authorization'] || req.headers['Authorization'];
-//   if (!authHeader) return res.status(401).json({ error: 'No token provided' });
-
-//   const parts = authHeader.split(' ');
-//   if (parts.length !== 2 || parts[0] !== 'Bearer') return res.status(401).json({ error: 'Malformed token' });
-
-//   const token = parts[1];
-//   const secret = process.env.JWT_SECRET;
-
-//   jwt.verify(token, secret, (err, decoded) => {
-//     if (err) {
-//       if (err.name === 'TokenExpiredError') return res.status(403).json({ error: 'Token expired' });
-//       return res.status(403).json({ error: 'Failed to authenticate token' });
-//     }
-//     req.user = decoded;
-//     next();
-//   });
-// };
+    req.user = decoded;
+    next();
+  });
+};
 
 export default {signin, signout, requireSignin, hasAuthorization, signup};

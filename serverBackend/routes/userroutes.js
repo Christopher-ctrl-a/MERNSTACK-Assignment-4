@@ -18,7 +18,7 @@ router.route('/').get(authCtrl.requireSignin,
 });
 
 // GET user by ID
-router.route('/:id').get(authCtrl.requireSignin, async (req, res) => {
+router.route('/:id').get(authCtrl.requireSignin, authCtrl.hasAuthorization, async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
@@ -39,8 +39,22 @@ router.route('/').post(async (req, res) => {
   }
 });
 
+
+router.param('id', async (req, res, next, id) => {
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    req.profile = user;
+    next();
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // UPDATE user
-router.route('/:id').put(authCtrl.requireSignin, async (req, res) => {
+router.route('/:id').put(authCtrl.requireSignin, authCtrl.hasAuthorization, async (req, res) => {
   try {
     // Optionally set updated if you want to control it manually:
     const updatedUser = await User.findByIdAndUpdate(
@@ -56,7 +70,7 @@ router.route('/:id').put(authCtrl.requireSignin, async (req, res) => {
 });
 
 // DELETE user
-router.route('/:id').delete(authCtrl.requireSignin, async (req, res) => {
+router.route('/:id').delete(authCtrl.requireSignin, authCtrl.hasAuthorization, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) return res.status(404).json({ error: 'User not found' });
@@ -67,7 +81,7 @@ router.route('/:id').delete(authCtrl.requireSignin, async (req, res) => {
 });
 
 // DELETE users
-router.route('/').delete(authCtrl.requireSignin, async (req, res) => {
+router.route('/').delete(authCtrl.requireSignin, authCtrl.hasAuthorization, async (req, res) => {
   try {
     const deletedUsers = await User.deleteMany();
     if (deletedUsers.deletedCount === 0) return res.status(404).json({ error: 'No users found' });
